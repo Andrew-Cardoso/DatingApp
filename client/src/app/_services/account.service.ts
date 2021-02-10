@@ -43,4 +43,18 @@ export class AccountService {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
   }
+
+  getAuth() {
+    return this.http.get(this.baseUrl + 'buggy/auth');
+  }
+  getBadR() {
+    return this.http.get(this.baseUrl + 'buggy/bad-request');
+  }
+  getInternal() {
+    return this.http.get(this.baseUrl + 'buggy/server-error');
+  }
+  getNF() {
+    return this.http.get(this.baseUrl + 'buggy/not-found');
+  }
+
 }

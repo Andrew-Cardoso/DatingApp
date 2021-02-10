@@ -1,26 +1,34 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
   <div class="container">
     <a class="navbar-brand" routerLink="/">Dating App</a>
-    <ng-container *ngIf="(accountService.currentUser$ | async) as user">
+    <ng-container *ngIf="accountService.currentUser$ | async">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-        <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
+        <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/members">Matches</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/lists">Lists</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/messages">Messages</a>
       </li>
     </ul>
     <div class="dropdown" dropdown>
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Welcome <span class="badge badge-pill badge-light">{{user.username}}</span>
+        Welcome <span class="badge badge-pill badge-light">{{'user.username'}}</span>
       </a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
         <a class="dropdown-item">Edit Profile</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logout()">Logout</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item disabled">Errors</a>
+
+        <a class="dropdown-item" (click)="internalserver()">500</a>
+        <a class="dropdown-item" (click)="br()">400</a>
+        <a class="dropdown-item" (click)="auth()">401</a>
+        <a class="dropdown-item" (click)="nf()">404</a>
+
       </div>
     </div>
   </ng-container>

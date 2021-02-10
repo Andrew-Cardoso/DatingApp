@@ -1,0 +1,22 @@
+<h4>Internal server error - refreshing the page will make the error disappear!</h4>
+<ng-container *ngIf="error">
+  <div class="alert alert-dismissible alert-danger">
+    <h5>Error: {{error.message}}</h5>
+    <p class="font-weight-bold">
+      Note: If you are seeing this, then Angular is probably not to blame
+    </p>
+    <p>What to do next?</p>
+    <ol>
+      <li>Open chrome dev tools</li>
+      <li>Inspect network tab</li>
+      <li>Check failing request</li>
+      <li>EXamine request URL - make sure it is correct</li>
+      <li>Reproduce the error in Postman or Insomnia - If we see the same response, then the issue is not with Angular
+      </li>
+    </ol>
+  </div>
+  <p>Follow the stack trace - this is where your investigation should start!</p>
+  <div class="col-12">
+  <code class="mt-5">{{error.details}}</code>
+</div>
+</ng-container>
