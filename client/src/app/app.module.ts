@@ -14,11 +14,19 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { GenderPipe } from './_pipes/gender.pipe';
+import { TimeAgoPipe } from './_pipes/time-ago.pipe';
+import { SharedModule } from './_modules/shared/shared.module';
+import { AboutComponent } from './members/member-detail/about/about.component';
+import { InterestsComponent } from './members/member-detail/interests/interests.component';
+import { SameHeightDirective } from './_directives/same-height.directive';
+import { PhotosComponent } from './members/member-detail/photos/photos.component';
+import { MessagesTabComponent } from './members/member-detail/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +38,16 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     MessagesComponent,
     MemberDetailComponent,
     MemberListComponent,
+    MemberCardComponent,
+    AboutComponent,
+    InterestsComponent,
+    PhotosComponent,
+    MessagesTabComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    GenderPipe,
+    TimeAgoPipe,
+    SameHeightDirective
   ],
   imports: [
     CommonModule,
@@ -40,13 +56,11 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BsDropdownModule.forRoot(),
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right'
-    })
+    SharedModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent],
 })

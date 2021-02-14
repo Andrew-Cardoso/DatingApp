@@ -1,3 +1,48 @@
-<p>
-  member-detail works!
-</p>
+<div class="pow full-height no-overflow inset-grey" *ngIf="member$ | async as member">
+  <div class="col-3 v-center" #cardParent>
+    <div class="card text-white bg-primary">
+      <h3 class="card-header text-center">{{ member.knownAs }}</h3>
+      <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+      <div class="card-body">
+        <div>
+          <strong>Location:</strong>
+          <p>{{ member.city }}, {{ member.country }}</p>
+        </div>
+        <div>
+          <strong>Age:</strong>
+          <p>{{ member.age }}</p>
+        </div>
+        <div>
+          <strong>Member since:</strong>
+          <p>{{ member.created | date: 'dd/MM/yyyy' }}</p>
+        </div>
+        <div>
+          <strong>Last Active:</strong>
+          <p>{{ member.lastActive | timeAgo: member.gender }}</p>
+        </div>
+      </div>
+      <div class="card-footer bg-primary">
+        <div class="btn-group d-flex">
+          <button class="btn btn-cozy">Like</button>
+          <button class="btn btn-good-blue">Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-9 v-center" [sameHeightAs]="cardParent">
+    <tabset class="member-tabset">
+      <tab heading='About memberKnownAs'>
+        <app-about [lookingFor]="member.lookingFor" [introduction]="member.introduction"></app-about>
+      </tab>
+      <tab heading='Interests'>
+        <app-interests [interests]="member.interests"></app-interests>
+      </tab>
+      <tab heading='Photos'>
+        <app-photos [photos]="member.photos"></app-photos>
+      </tab>
+      <tab heading='Messages'>
+        <app-messages-tab [messages]="'messages'"></app-messages-tab>
+      </tab>
+    </tabset>
+  </div>
+</div>

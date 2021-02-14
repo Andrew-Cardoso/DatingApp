@@ -1,4 +1,4 @@
-<h4>Internal server error - refreshing the page will make the error disappear!</h4>
+<h4 class="text-white">Internal server error - refreshing the page will make the error disappear!</h4>
 <ng-container *ngIf="error">
   <div class="alert alert-dismissible alert-danger">
     <h5>Error: {{error.message}}</h5>
@@ -15,7 +15,7 @@
       </li>
     </ol>
   </div>
-  <p>Follow the stack trace - this is where your investigation should start!</p>
+  <p class="text-white">Follow the stack trace - this is where your investigation should start!</p>
   <div class="col-12">
   <code class="mt-5">{{error.details}}</code>
 </div>

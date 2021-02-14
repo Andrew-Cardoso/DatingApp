@@ -1,3 +1,138 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
+
+@use 'sass:color'
+
+$monitor-screen-width: 768px
+
+$bg-primary: #333
+$bg-primary-light: color.scale($bg-primary, $lightness: 50%)
+$cozy-red: #f22
+$good-blue: #7370F9
+$light-scale: 20%
+$light-scale-soft: 10%
+$bg-primary-dark: color.scale($bg-primary, $lightness: -20%)
+
+$transition-default: all 350ms ease-out
+
+:root
+	font-size: 60%
+*
+	margin: 0
+	padding: 0
+	box-sizing: border-box
+html, body
+	height: 100vh
+	width: 100vw
+	overflow: hidden
+body
+	// padding: 25px
+	// padding-top: 75px
+	padding: 10px
+	padding-top: 50px
+	background: $bg-primary
+.container-dating
+	width: 100%
+	height: 100%
+	border: 2px solid #333
+	border-radius: 555px 25px 15px 25px/25px 5px 35px 
+	padding: 40px
+	padding-bottom: 20px
+	overflow: auto
+	
+	
+.bg-primary-darker
+	background: $bg-primary-dark
+.btn-cozy
+	background-color: $cozy-red
+	border-color: $cozy-red
+	color: white
+	&:hover
+		background-color: color.scale($cozy-red, $lightness: -$light-scale)
+		border-color: color.scale($cozy-red, $lightness: -$light-scale)
+		color: white
+		
+.btn-outline-cozy
+	background-color: transparent
+	border-color: $cozy-red
+	color: $cozy-red
+	&:hover
+		background-color: $cozy-red
+		border-color: transparent
+		color: white
+
+
+.btn-good-blue
+	background-color: $good-blue
+	border-color: $good-blue
+	color: white
+	&:hover
+		background-color: color.scale($good-blue, $lightness: -$light-scale-soft)
+		border-color: color.scale($good-blue, $lightness: -$light-scale-soft)
+		color: white
+		
+.btn-outline-good-blue
+	background-color: transparent
+	border-color: $good-blue
+	color: $good-blue
+	&:hover
+		background-color: $good-blue
+		border-color: transparent
+		color: white
+.btn
+	transition: $transition-default
+.btn-md
+	padding: .35rem .65rem
+	font-size: .9rem
+	line-height: 1.5rem
+.animate
+	transition: $transition-default
+.pow
+	background: $bg-primary-light
+	margin-left: -15px
+	margin-right: -15px
+	padding: 20px
+	display: flex
+	flex-wrap: wrap
+.full-height
+		height: auto
+		min-height: 100%
+.no-overflow
+	overflow: hidden
+.inset-grey
+	box-shadow: inset 0 0 60px 20px #333	
+.v-center
+	align-self: center
+.member-tabset
+	> .nav-tabs
+		height: 45px
+		border-bottom: none
+		.nav-link
+			transition: $transition-default
+			&.active
+				background-color: transparent
+	> .tab-content
+		height: calc( 100% - 45px )
+		padding-top: 20px
+		overflow-x: hidden
+		overflow-y: auto
+
+::-webkit-scrollbar
+	width: 10px
+	background: transparent
+
+::-webkit-scrollbar-thumb
+	background: #333
+	border-radius: 10px
+	background-image: linear-gradient(90deg, black 25%, transparent 25%, transparent 50%, black 50%,black 75%, transparent 75%, transparent)
+
+::-webkit-scrollbar-track
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, .3)
+	border-radius: 10px
+	margin-top: 7px
+	margin-bottom: 9px
+
+@media (min-width: $monitor-screen-width)
+	:root
+		font-size: 100%
