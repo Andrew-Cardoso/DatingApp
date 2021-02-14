@@ -27,6 +27,13 @@ import { InterestsComponent } from './members/member-detail/interests/interests.
 import { SameHeightDirective } from './_directives/same-height.directive';
 import { PhotosComponent } from './members/member-detail/photos/photos.component';
 import { MessagesTabComponent } from './members/member-detail/messages/messages.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberFormComponent } from './members/member-edit/member-form/member-form.component';
+import { IsEqualPipe } from './_pipes/is-equal.pipe';
+import { MemberProfileCardComponent } from './members/member-profile-card/member-profile-card.component';
+import { CitiesPipe } from './_pipes/cities.pipe';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -45,9 +52,14 @@ import { MessagesTabComponent } from './members/member-detail/messages/messages.
     MessagesTabComponent,
     NotFoundComponent,
     ServerErrorComponent,
+    MemberEditComponent,
+    MemberFormComponent,
     GenderPipe,
     TimeAgoPipe,
-    SameHeightDirective
+    IsEqualPipe,
+    CitiesPipe,
+    SameHeightDirective,
+    MemberProfileCardComponent,
   ],
   imports: [
     CommonModule,
@@ -56,11 +68,13 @@ import { MessagesTabComponent } from './members/member-detail/messages/messages.
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })

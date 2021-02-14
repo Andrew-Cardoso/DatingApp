@@ -1,0 +1,44 @@
+<ng-container *ngIf="countries$ | async as countries">
+  <h4>Location Details:</h4>
+  <div class="row">
+    <div class="col-6 pl-3">
+      Country
+    </div>
+    <div class="col-6 pl-3">
+      City
+    </div>
+    <div class="col-6">
+      <ng-select [hideSelected]="true" class="form-control" name="country" [clearable]="false"
+        (change)="onCountryChanged()" [items]="countries" [(ngModel)]="member.country" bindValue="country"
+        bindLabel="country" required>
+        <ng-template ng-label-tmp let-item="item">
+          {{ item.country }}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          <div class="ng-select-custom-item">
+            {{ item.country }}
+          </div>
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="col-6">
+      <ng-select [hideSelected]="true" class="form-control" name="city" [clearable]="false"
+        [items]="countries | cities: member.country" [(ngModel)]="member.city" required>
+        <ng-template ng-label-tmp let-item="item">
+          {{ item }}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          <div class="ng-select-custom-item">
+            {{ item }}
+          </div>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+</ng-container>
+<h4 class="mt-2">Description</h4>
+<textarea class="form-control" [(ngModel)]="member.introduction" name="introduction" rows="6"></textarea>
+<h4 class="mt-2">Looking for</h4>
+<textarea class="form-control" [(ngModel)]="member.lookingFor" name="lookingFor" rows="6"></textarea>
+<h4 class="mt-2">Interests</h4>
+<textarea class="form-control" [(ngModel)]="member.interests" name="interests" rows="6"></textarea>

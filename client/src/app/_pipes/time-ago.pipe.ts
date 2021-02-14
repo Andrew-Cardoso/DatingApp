@@ -18,14 +18,12 @@ export class TimeAgoPipe implements PipeTransform {
 		const days = Math.round(Math.abs(hours / 24));
 		const months = Math.round(Math.abs(days/30.416));
 		const years = Math.round(Math.abs(days/365));
-
+    
     if (isNaN(seconds)) return '';
-    if (seconds === 0) return gender === 'f' ? `She's ${this.msg} her!` : `He's ${this.msg} him!`;
-    if (seconds < 60) return `${seconds} seconds ago`;
-    if (minutes === 1) return `A minute ago`;
-    if (minutes < 60) return `${minutes} minutes ago`;
+    if (minutes < 1) return gender === 'f' ? `She's ${this.msg} her!` : `He's ${this.msg} him!`;
+    if (minutes < 60) return `A few minutes ago`;
     if (hours === 1) return `An hour ago`;
-    if (hours < 24) return `${hours} hours ago`;
+    if (hours < 24) return `A few hours ago`;
     if (days === 1) return `A day ago`;
     if (days < 7) return `${days} days ago`;
     if (days < 14) return `A week ago`;

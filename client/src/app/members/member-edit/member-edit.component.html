@@ -1,0 +1,25 @@
+<div class="pow full-height no-overflow inset-grey" *ngIf="member">
+  <div class="col-lg-3 col-md-4 text-center">
+    <h1>Your profile</h1>
+  </div>
+  <div class="col-lg-9 col-md-8">
+    <div class="alert alert-dismissible alert-danger animate" *ngIf="!(member | isEqual: originalMember)">
+      <strong>Information: </strong>You have made changes. Any unsaved changes will be lost
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-4 v-center" #cardParent>
+    <app-member-profile-card [member]="member">
+      <button class="btn btn-success btn-block" (click)="updateMember()" [disabled]="member | isEqual: originalMember">Save changes</button>
+    </app-member-profile-card>
+  </div>
+  <div class="col-lg-9 col-md-8" [style.minHeight.px]="cardParent.offsetHeight">
+    <tabset class="member-tabset">
+      <tab heading="About {{ member.knownAs }}">
+        <app-member-form [member]="member"></app-member-form>
+      </tab>
+      <tab heading="Edit Photos">
+        <p>Photo edit will go here</p>
+      </tab>
+    </tabset>
+  </div>
+</div>

@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MembersService } from 'src/app/_services/members.service';
 
@@ -11,25 +6,16 @@ import { MembersService } from 'src/app/_services/members.service';
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
   styleUrls: ['./member-detail.component.sass'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MemberDetailComponent implements OnInit {
-
-  member$ = this.memberService.getMember(this.route.snapshot.paramMap.get('username'));
+  member$ = this.memberService.getMember(
+    this.route.snapshot.paramMap.get('username')
+  );
 
   constructor(
     private memberService: MembersService,
-    private route: ActivatedRoute,
-    private changeDect: ChangeDetectorRef
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {   
-    this.update();
-  }
-
-  async update() {
-    this.changeDect.detectChanges();
-    await new Promise((r) => setTimeout(r, 1000));
-    this.update();
-  }
+  ngOnInit() {}
 }

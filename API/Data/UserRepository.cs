@@ -44,12 +44,12 @@ namespace API.Data
 			.ToListAsync();
 		}
 
-		public async Task<AppUser> GetUser(int id)
+		public async Task<AppUser> GetUserAsync(int id)
 		{
 			return await _context.Users.FindAsync(id);
 		}
 
-		public async Task<AppUser> GetUser(string username)
+		public async Task<AppUser> GetUserAsync(string username)
 		{
 			return await _context.Users.Include(x => x.Photos).SingleOrDefaultAsync(x => x.UserName == username.ToLower());
 		}

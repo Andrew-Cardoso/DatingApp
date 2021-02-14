@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary-darker fixed-top">
   <div class="container">
     <a class="navbar-brand" routerLink="/">Dating App</a>
-    <ng-container *ngIf="accountService.currentUser$ | async">
+    <ng-container *ngIf="accountService.currentUser$ | async as user">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/members">Matches</a>
@@ -15,10 +15,10 @@
     </ul>
     <div class="dropdown" dropdown>
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Welcome <span class="badge badge-pill badge-light">{{'user.username'}}</span>
+        Welcome <span class="badge badge-pill badge-light">{{ user.username | titlecase }}</span>
       </a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
-        <a class="dropdown-item">Edit Profile</a>
+        <a class="dropdown-item" routerLink="/member/edit" routerLinkActive="active" >Edit Profile</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logout()">Logout</a>
         <div class="dropdown-divider"></div>
@@ -28,7 +28,6 @@
         <a class="dropdown-item" (click)="br()">400</a>
         <a class="dropdown-item" (click)="auth()">401</a>
         <a class="dropdown-item" (click)="nf()">404</a>
-
       </div>
     </div>
   </ng-container>

@@ -1,0 +1,25 @@
+<div class="card text-white bg-primary">
+  <h3 class="card-header text-center">{{ member.knownAs }}</h3>
+  <img src="{{ member.photoUrl }}" alt="{{ member.knownAs }}" class="card-img-top img-thumbnail">
+  <div class="card-body">
+    <div>
+      <strong>Location:</strong>
+      <p>{{ member.city }}, {{ member.country }}</p>
+    </div>
+    <div>
+      <strong>Age:</strong>
+      <p>{{ member.age }}</p>
+    </div>
+    <div>
+      <strong>Member since:</strong>
+      <p>{{ member.created | date: 'dd/MM/yyyy' }}</p>
+    </div>
+    <div>
+      <strong>Last Active:</strong>
+      <p>{{ member.lastActive | timeAgo: member.gender }}</p>
+    </div>
+  </div>
+  <div class="card-footer bg-primary">
+    <ng-content></ng-content>
+  </div>
+</div>

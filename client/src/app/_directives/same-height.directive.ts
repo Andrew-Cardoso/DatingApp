@@ -5,10 +5,14 @@ import { Directive, ElementRef, HostBinding, HostListener, Input, OnInit, Render
 })
 export class SameHeightDirective implements OnInit {
   @Input() sameHeightAs: HTMLDivElement;
-
+  @Input() min: boolean;
+  private property = 'height';
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
+    if (this.min) {
+      this.property = 'min-height'
+    }
     this.defineHeight();
   }
 
@@ -17,7 +21,7 @@ export class SameHeightDirective implements OnInit {
   }
 
   private defineHeight() {
-    this.renderer.setStyle(this.el.nativeElement, 'height', `${this.sameHeightAs.offsetHeight}px`);
+    this.renderer.setStyle(this.el.nativeElement, this.property, `${this.sameHeightAs.offsetHeight}px`);
   }
 
 }

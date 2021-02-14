@@ -5,6 +5,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { NgSelectModule } from "@ng-select/ng-select";
 @NgModule({
   imports: [
     CommonModule,
@@ -14,12 +15,14 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     }),
     TabsModule.forRoot(),
     NgxGalleryModule,
+    NgSelectModule
   ],
   exports: [
     BsDropdownModule,
     ToastrModule,
     TabsModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgSelectModule
   ],
   declarations: []
 })

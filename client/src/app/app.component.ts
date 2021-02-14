@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
+import { WorldService } from './_services/world.service';
 
 @Component({
   selector: 'app-root',
@@ -13,14 +12,19 @@ export class AppComponent implements OnInit {
   title = 'client';
   users: any[];
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private worldService: WorldService) {}
 
   ngOnInit() {
     this.setCurrentUser();
+    this.setCountries();
   }
 
-  setCurrentUser() {
+  private setCurrentUser() {
     const user: User = JSON.parse(localStorage.getItem('user'));
     this.accountService.setCurrentUser(user);
+  }
+
+  private setCountries() {
+    this.worldService.setCountries();
   }
 }
