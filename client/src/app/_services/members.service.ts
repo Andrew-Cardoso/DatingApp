@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
+import { Photo } from '../_models/photo';
 @Injectable({
   providedIn: 'root',
 })
@@ -27,9 +28,14 @@ export class MembersService {
   }
   
   updateMember(member: Member) {
-    return this.http.put(this.baseUrl, member).pipe(map(() => {
+    return this.http.put(this.baseUrl, member).pipe(map((updatedMember: Member) => {
       const i = this.members.findIndex(x => x.id === member.id);
-      this.members[i] = member;
+      this.members[i] = updatedMember;
+      return updatedMember;
     }));
+  }
+
+  updatePhotos(photos: Photo[]) {
+    return this.http.patch(this.baseUrl, photos);
   }
 }

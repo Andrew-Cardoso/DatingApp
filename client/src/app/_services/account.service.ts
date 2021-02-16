@@ -28,15 +28,11 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post<User>(`${this.baseUrl}account/register`, model).pipe(map(user => {
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSource.next(user);
-      }
-    }));
+    return this.http.post<User>(`${this.baseUrl}account/register`, model).pipe(map(user => user && this.setCurrentUser(user)));
   }
 
   setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user); 
   }
 

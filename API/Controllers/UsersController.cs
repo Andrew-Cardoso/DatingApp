@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.Entities;
+using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -34,16 +37,30 @@ namespace API.Controllers
 		}
 
 		[HttpPut]
-		public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdated)
+		public async Task<ActionResult<MemberDto>> UpdateUser(MemberUpdateDto memberUpdated)
 		{
-			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var username = User.GetUsername();
 			var user = await _userRepository.GetUserAsync(username);
 
 			_mapper.Map(memberUpdated, user);
 			_userRepository.Update(user);
+			
+			if (!user.Photos.Any(x => x.IsMain)) user.Photos.FirstOrDefault().IsMain = true;
 
-			if (await _userRepository.SaveAllAsync()) return NoContent();
+			if (await _userRepository.SaveAllAsync()) return Ok(_mapper.Map<MemberDto>(user));
 			return BadRequest($"Failed to update {username}");
 		}
+
+		// [HttpPatch]
+		// public async Task<ActionResult> UpdatePhotos(IEnumerable<PhotoDto> photos)
+		// {
+		// 	var currentUser = await _userRepository.GetUserAsync(User.GetUsername());
+		// 	_mapper.Map<IEnumerable<PhotoDto>, IEnumerable<Photo>>(photos, currentUser.Photos);
+		// 	_userRepository.Update(currentUser);
+			
+		// 	if (await _userRepository.SaveAllAsync()) return NoContent();
+		// 	return BadRequest("Something wrong happened");
+		// }
+
 	}
 }

@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="col-lg-3 col-md-4 v-center" #cardParent>
-    <app-member-profile-card [member]="member">
+    <app-member-profile-card #memberProfileCard [member]="member">
       <button class="btn btn-success btn-block" (click)="updateMember()" [disabled]="member | isEqual: originalMember">Save changes</button>
     </app-member-profile-card>
   </div>
@@ -18,7 +18,7 @@
         <app-member-form [member]="member"></app-member-form>
       </tab>
       <tab heading="Edit Photos">
-        <p>Photo edit will go here</p>
+        <app-photo-editor [photos]="member.photos" (setMainUrl)="updateMemberUrl($event)"></app-photo-editor>
       </tab>
     </tabset>
   </div>

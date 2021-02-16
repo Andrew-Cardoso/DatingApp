@@ -14,6 +14,7 @@
       </li>
     </ul>
     <div class="dropdown" dropdown>
+      <img [src]="user.photoUrl" [alt]="user.username">
       <a class="dropdown-toggle text-light" dropdownToggle>
         Welcome <span class="badge badge-pill badge-light">{{ user.username | titlecase }}</span>
       </a>

@@ -27,7 +27,7 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit () {
     if (this.photos) {
-      this.galleryImages = this.photos.map(photo => {
+      this.galleryImages = this.photos.sort(a => a.isMain ? -1 : 1).map(photo => {
         return {
           small: photo.url,
           medium: photo.url,

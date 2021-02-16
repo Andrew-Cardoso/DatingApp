@@ -34,6 +34,7 @@ import { MemberProfileCardComponent } from './members/member-profile-card/member
 import { CitiesPipe } from './_pipes/cities.pipe';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CitiesPipe,
     SameHeightDirective,
     MemberProfileCardComponent,
+    PhotoEditorComponent,
   ],
   imports: [
     CommonModule,

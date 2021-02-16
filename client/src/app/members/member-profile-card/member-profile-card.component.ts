@@ -42,4 +42,8 @@ export class MemberProfileCardComponent implements OnInit {
     return this.year === yearNow && this.month === monthNow && this.day === dayNow && hourNow - this.hour < 1;
   }
 
+  forceUpdate() {
+    this.changeDect.detectChanges();
+  }
+
 }

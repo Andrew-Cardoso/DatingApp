@@ -15,7 +15,5 @@ namespace API.Validations
             return new ValidationResult("You must be at least 18 to register");
 		}
 
-
-
 	}
 }
