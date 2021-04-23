@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,6 +8,7 @@ using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,20 +29,17 @@ namespace API.Controllers
 		[HttpPost("register")]
 		public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
 		{
-			if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
-
-			// var mapped = _mapper.Map<>
+			if (await UserExists(registerDto.Username)) return BadRequest("It seems someone got your username a few seconds ago, what a bad luck");
 
 			using var hmac = new HMACSHA512();
 
-			var user = new AppUser
-			{
-				UserName = registerDto.Username.ToLower(),
-				PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-				PasswordSalt = hmac.Key
-			};
-			
-			_mapper.Map(registerDto, user);
+			var user = _mapper.Map<AppUser>(registerDto);
+
+			user.UserName = registerDto.Username.ToLower();
+			user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+			user.PasswordSalt = hmac.Key;
+
+			// _mapper.Map(registerDto, user);
 
 			if (!user.Photos.Any(x => x.IsMain)) user.Photos.FirstOrDefault().IsMain = true;
 
@@ -50,7 +49,9 @@ namespace API.Controllers
 			return new UserDto
 			{
 				Username = user.UserName,
-				Token = _tokenService.CreateToken(user)
+				Token = _tokenService.CreateToken(user),
+				PhotoUrl = user.Photos.First(x => x.IsMain)?.Url,
+				knownAs = user.KnownAs
 			};
 		}
 
@@ -70,8 +71,15 @@ namespace API.Controllers
 			{
 				Username = user.UserName,
 				Token = _tokenService.CreateToken(user),
-				PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+				PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+				knownAs = user.KnownAs
 			};
+		}
+
+		[HttpGet("user-exists/{username}")]
+		public async Task<ActionResult<bool>> TaskUserExists(string username)
+		{
+			return Ok(await UserExists(username));
 		}
 
 		private async Task<bool> UserExists(string username)

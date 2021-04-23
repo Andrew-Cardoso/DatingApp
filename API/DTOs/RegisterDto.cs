@@ -31,6 +31,7 @@ namespace API.DTOs
 		public string City { get; set; }
         [Required]
 		public string Country { get; set; }
+        [Required(ErrorMessage = "You need at least one photo.")]
 		public ICollection<Photo> Photos { get; set; }
 
     }

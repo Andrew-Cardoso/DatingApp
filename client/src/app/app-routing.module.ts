@@ -9,10 +9,11 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { HomePageGuard } from './_guards/homepage.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, runGuardsAndResolvers: 'always', canActivate: [HomePageGuard] },
   {
     path: '',
     runGuardsAndResolvers: 'always',

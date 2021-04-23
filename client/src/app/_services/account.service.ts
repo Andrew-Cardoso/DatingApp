@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-import { map } from "rxjs/operators";
+import { of, ReplaySubject } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { RegisterDto } from '../_models/register-dto';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -27,13 +28,18 @@ export class AccountService {
     );
   }
 
-  register(model: any) {
-    return this.http.post<User>(`${this.baseUrl}account/register`, model).pipe(map(user => user && this.setCurrentUser(user)));
+  register(model: RegisterDto) {
+    return this.http.post<User>(`${this.baseUrl}account/register`, model).pipe(map((user) => user && this.setCurrentUser(user)));
   }
 
   setCurrentUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
-    this.currentUserSource.next(user); 
+    this.currentUserSource.next(user);
+  }
+
+  usernameExists(username?: string) {
+    if (!username || username.length < 1) return of(false);
+    return this.http.get(`${this.baseUrl}account/user-exists/${username}`).pipe(take(1));
   }
 
   logout() {
@@ -53,5 +59,4 @@ export class AccountService {
   getNF() {
     return this.http.get(this.baseUrl + 'buggy/not-found');
   }
-
 }

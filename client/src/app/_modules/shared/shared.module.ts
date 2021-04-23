@@ -7,6 +7,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgSelectModule } from "@ng-select/ng-select";
+import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +19,9 @@ import { NgSelectModule } from "@ng-select/ng-select";
     TabsModule.forRoot(),
     NgxGalleryModule,
     NgSelectModule,
-    TooltipModule
+    TooltipModule,
+    BsDatepickerModule.forRoot(),
+    TextareaAutosizeModule
   ],
   exports: [
     BsDropdownModule,
@@ -25,7 +29,9 @@ import { NgSelectModule } from "@ng-select/ng-select";
     TabsModule,
     NgxGalleryModule,
     NgSelectModule,
-    TooltipModule
+    TooltipModule,
+    BsDatepickerModule,
+    TextareaAutosizeModule
   ],
   declarations: []
 })

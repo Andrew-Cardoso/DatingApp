@@ -1,15 +1,124 @@
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
-  <h2 class="text-center text-primary">Sign up</h2>
-  <hr>
+<form [formGroup]="registerForm" class="form-register" (ngSubmit)="register()" autocomplete="off">
+  <h2 class="text-center">Sign up</h2>
+  <fieldset *ngIf="step === 0">
+    <legend>Basic info</legend>
+    <div class="form-group">
+      <label>I am a: </label>
+      <div class="form-check ml-4">
+        <input class="form-check-input" type="radio" formControlName="gender" value="f">
+        <label class="form-check-label pl-2">Lady</label>
+      </div>
+      <div class="form-check ml-4">
+        <input class="form-check-input" type="radio" formControlName="gender" value="m">
+        <label class="form-check-label pl-2">Gentleman</label>
+      </div>
+    </div>
+
+    <app-input tltp="Public name you want to be called" [formControl]="registerForm.controls.knownAs" label="Known as">
+    </app-input>
+
+    <app-date [formControl]="registerForm.controls.dateOfBirth" label="Date of birth" [maxDate]="maxDate"></app-date>
+
+    <ng-container *ngIf="countries$ | async as countries">
+      <div class="form-group">
+        <label>Country</label>
+        <ng-select [hideSelected]="true" class="form-control" [clearable]="false"
+          [items]="countries" bindValue="country" bindLabel="country" formControlName="country"
+          [class.is-invalid]="registerForm | hasError: 'country'">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.country }}
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            <div class="ng-select-custom-item">
+              {{ item.country }}
+            </div>
+          </ng-template>
+        </ng-select>
+        <div class="invalid-feedback">
+          Country is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <ng-select [hideSelected]="true" class="form-control" [clearable]="false" formControlName="city"
+          [ngClass]="{disabled: registerForm.controls.country.value === '', 'is-invalid': registerForm | hasError: 'city'}"
+          [items]="countries | cities: registerForm.controls.country.value"
+          tooltip="{{ registerForm.controls.country.value === '' ? 'Please, select a country first' : ''}}">
+          <ng-template ng-label-tmp let-item="item">
+            {{ item }}
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            <div class="ng-select-custom-item">
+              {{ item }}
+            </div>
+          </ng-template>
+        </ng-select>
+        <div class="invalid-feedback">
+          City is required.
+        </div>
+      </div>
+    </ng-container>
+  </fieldset>
+  <fieldset *ngIf="step === 1">
+    <legend>About you</legend>
+    <app-textarea [formControl]="registerForm.controls.introduction" label="Description"></app-textarea>
+    <app-textarea [formControl]="registerForm.controls.interests" label="Interests"></app-textarea>
+    <app-textarea [formControl]="registerForm.controls.lookingFor" label="Looking for"></app-textarea>
+  </fieldset>
+  <fieldset *ngIf="step === 2">
+    <legend>Photos</legend>
+    <div class="upload-photo-container">
+      <div class="uploader">
+        <input 
+        type="file" 
+        name="photo" 
+        accept="image/png, image/jpeg" 
+        multiple 
+        (change)="onUploadPhoto($event)"
+        [class.is-invalid]="registerForm | hasError: 'photos'"
+        >
+        <img src="../../../assets/images/upload-photo.png" alt="Upload image">
+        <div *ngIf="registerForm | hasError: 'photos'" class="invalid-feedback">
+          You need at least one photo
+        </div>
+      </div>
+      <div class="photos">
+        <div *ngFor="let photo of registerForm.get('photos').value; let i = index" >
+          <img [src]="photo.url" [alt]="'Photo '+ i">
+          <div class="actions-photo">
+            <button (click)="setMain(i)" class="btn btn-sm" tooltip="Set as main" [ngClass]="photo.isMain ? 'btn-outline-good-blue' : 'btn-good-blue'" [disabled]="photo.isMain">Main</button>
+			      <button (click)="deletePhoto(i)" class="btn btn-sm btn-danger" tooltip="Delete photo"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset *ngIf="step === 3">
+    <legend>Login info</legend>
+    <app-input tltp="Name you'll use to login" [formControl]="registerForm.controls.username" label="Username"
+      [feedbacks]="invalidFeedback.username">
+    </app-input>
+    <app-input [formControl]="registerForm.controls.password" label="Password" [feedbacks]="invalidFeedback.password"
+      type="password" [showPassword]="true">
+    </app-input>
+    <app-input [formControl]="registerForm.controls.confirmPassword" label="Confirm password"
+      [feedbacks]="invalidFeedback.confirmPassword" type="password">
+    </app-input>
+  </fieldset>
   <div class="form-group">
-    <input type="text" class="form-control" name="username" [(ngModel)]="model.username" placeholder="Username">
+    <div class="btn-group btn-block">
+      <button class="btn btn-sm btn-danger" (click)="cancel()" type="button">Cancel</button>
+      <button *ngIf="step !== 0;" class="btn btn-sm btn-secondary mr-2" type="button" (click)="previous()">
+        <img src="../../assets/images/arrow.png" alt="Previous">
+        Previous
+      </button>
+      <button *ngIf="step === 3; else btnNext" class="btn btn-sm btn-success mr-2" type="submit">Register</button>
+    </div>
   </div>
-  <div class="form-group">
-    <input type="password" class="form-control" name="password" [(ngModel)]="model.password" placeholder="Password ">
-  </div>
-  <div class="form-group text-center">
-    <button class="btn btn-success mr-2" type="submit">Register</button>
-    <button class="btn btn-success" (click)="cancel()" type="button">Cancel</button>
-  </div>
-  <hr>
 </form>
+<ng-template #btnNext>
+  <button class="btn btn-sm btn-good-blue mr-2" type="button" (click)="validateCurrentStep()">
+    Next
+    <img src="../../assets/images/arrow.png" alt="Next">
+  </button>
+</ng-template>

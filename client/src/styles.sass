@@ -15,6 +15,7 @@ $light-scale-soft: 10%
 $bg-primary-dark: color.scale($bg-primary, $lightness: -20%)
 $bg-alert-danger: #f8d7da
 $color-alert-danger: #dc3545
+$text-color-primary: #fff
 
 $transition-default: all 350ms ease-out
 
@@ -32,6 +33,9 @@ body
 	padding: 10px
 	padding-top: 50px
 	background: $bg-primary
+	color: $text-color-primary
+nav
+	border-color: black
 .container-dating
 	width: 100%
 	height: 100%
@@ -52,7 +56,6 @@ body
 		background-color: color.scale($cozy-red, $lightness: -$light-scale)
 		border-color: color.scale($cozy-red, $lightness: -$light-scale)
 		color: white
-		
 .btn-outline-cozy
 	background-color: transparent
 	border-color: $cozy-red
@@ -79,7 +82,7 @@ body
 	&:hover
 		background-color: $good-blue
 		border-color: transparent
-		color: white
+		color: white !important
 .btn
 	transition: $transition-default
 .btn-md
@@ -95,6 +98,8 @@ body
 		animation: 1s ease 0s pulse-alert infinite
 .animate-faster
 	transition: all 150ms ease
+.pow, .row
+	color: #333
 .pow
 	background: $bg-primary-light
 	margin-left: -15px
@@ -156,6 +161,35 @@ body
 	border-radius: 555px 25px 15px 25px/25px 5px 35px 555px
 	background: #ccc
 	border-bottom: none
+form
+	[type="radio"]::before
+		background-color: #777
+		border-color: #777
+	[type="radio"]:checked::before
+		background-color: #222
+	&.form-register
+		*
+			color: white
+		legend
+			color: #aaa
+			opacity: .5,
+			font-size: 1.3rem
+			margin-top: 20px
+		.form-control
+			background: #222
+			color: #ddd
+		input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active
+			-webkit-background-clip: text
+			transition: background-color 0s ease-in-out 999999s
+			-webkit-box-shadow: 0 0 0 1000px #222 inset
+			-webkit-text-fill-color: #ddd
+			border: 2px solid black
+	
+			
+	/*
+		.custom-control-input:checked ~ .custom-control-label::before
+		*/
+
 // Animations
 @keyframes pulse-alert
 	0%

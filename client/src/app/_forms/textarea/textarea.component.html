@@ -1,0 +1,14 @@
+<div class="form-group mt-3">
+	<label>{{ label }}</label>
+	<textarea [tooltip]="tltp" [class.is-invalid]="ngControl.touched && ngControl.invalid" class="form-control"
+		[formControl]="ngControl.control" autosize>
+	</textarea>
+	<div *ngIf="ngControl.control.errors && ngControl.control.errors.required" class="invalid-feedback">
+		{{ label }} is required.
+	</div>
+	<ng-container *ngFor="let feedback of feedbacks">
+		<div *ngIf="ngControl.control.errors && ngControl.control.errors[feedback.error]" class="invalid-feedback">
+			{{ feedback.message }}
+		</div>
+	</ng-container>
+</div>

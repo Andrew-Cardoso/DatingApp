@@ -1,0 +1,17 @@
+<div class="form-group mt-3">
+	<label>{{ label }}</label>
+	<input [tooltip]="tltp" [class.is-invalid]="ngControl.touched && ngControl.invalid" [type]="type"
+		class="form-control" [formControl]="ngControl.control">
+	<button *ngIf="showPassword && ngControl.value.length && ngControl.value.length > 0" class="btn btn-sm"
+		[tooltip]="(isShown ? 'Show' : 'Hide') + ' password'" (click)="toggleInputType()" tabindex="-1">
+		<i class="fa fa-eye{{isShown ? '-slash' : ''}}"></i>
+	</button>
+	<div *ngIf="ngControl.control.errors && ngControl.control.errors.required" class="invalid-feedback">
+		{{ label }} is required.
+	</div>
+	<ng-container *ngFor="let feedback of feedbacks">
+		<div *ngIf="ngControl.control.errors && ngControl.control.errors[feedback.error]" class="invalid-feedback">
+			{{ feedback.message }}
+		</div>
+	</ng-container>
+</div>

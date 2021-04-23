@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ListsComponent } from './lists/lists.component';
@@ -35,6 +35,11 @@ import { CitiesPipe } from './_pipes/cities.pipe';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { IsInvalidPipe } from './_pipes/is-invalid.pipe';
+import { HasErrorPipe } from './_pipes/has-error.pipe';
+import { InputComponent } from './_forms/input/input.component';
+import { TextareaComponent } from './_forms/textarea/textarea.component';
+import { DateComponent } from './_forms/date/date.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +67,11 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
     SameHeightDirective,
     MemberProfileCardComponent,
     PhotoEditorComponent,
+    IsInvalidPipe,
+    HasErrorPipe,
+    InputComponent,
+    TextareaComponent,
+    DateComponent,
   ],
   imports: [
     CommonModule,
@@ -71,7 +81,8 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
     HttpClientModule,
     FormsModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

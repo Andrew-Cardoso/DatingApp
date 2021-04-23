@@ -7,7 +7,7 @@ import { Country } from '../_models/country';
 export class CitiesPipe implements PipeTransform {
 
   transform(countries: Country[], countryName: string): string[] {
-    return countries.find((x) => x.country === countryName).cities;
+    return countries.find((x) => x.country === countryName)?.cities;
   }
 
 }

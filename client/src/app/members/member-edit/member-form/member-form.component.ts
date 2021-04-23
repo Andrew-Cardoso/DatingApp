@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Member } from 'src/app/_models/member';
 import { WorldService } from 'src/app/_services/world.service';
 
@@ -8,11 +8,15 @@ import { WorldService } from 'src/app/_services/world.service';
   styleUrls: ['./member-form.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MemberFormComponent {
+export class MemberFormComponent implements OnInit {
   @Input() member: Member;
   countries$ = this.worldService.countries$;
 
   constructor(private worldService: WorldService) { }
+
+  ngOnInit() {
+    this.worldService.setCountries();
+  }
 
   onCountryChanged() {
     this.member.city = "";
