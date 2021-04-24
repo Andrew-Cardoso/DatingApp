@@ -1,3 +1,4 @@
+import { Gender } from "../_enums/gender.enum";
 import { Photo } from "./photo";
 
 export interface RegisterDto {
@@ -5,7 +6,7 @@ export interface RegisterDto {
 	password: string;
 	dateOfBirth: Date;
 	knownAs: string;
-	gender: 'm' | 'f';
+	gender: Gender;
 	country: string;
 	city: string;
 	photos: Photo[];

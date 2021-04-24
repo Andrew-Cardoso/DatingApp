@@ -5,11 +5,11 @@
     <div class="form-group">
       <label>I am a: </label>
       <div class="form-check ml-4">
-        <input class="form-check-input" type="radio" formControlName="gender" value="f">
+        <input class="form-check-input" type="radio" formControlName="gender" [value]="GenderEnum.Female">
         <label class="form-check-label pl-2">Lady</label>
       </div>
       <div class="form-check ml-4">
-        <input class="form-check-input" type="radio" formControlName="gender" value="m">
+        <input class="form-check-input" type="radio" formControlName="gender" [value]="GenderEnum.Male">
         <label class="form-check-label pl-2">Gentleman</label>
       </div>
     </div>

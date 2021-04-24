@@ -14,9 +14,9 @@
       </li>
     </ul>
     <div class="dropdown" dropdown>
-      <img [src]="user.photoUrl" [alt]="user.username">
+      <img [src]="user.photoUrl" [alt]="user.knownAs">
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Welcome <span class="badge badge-pill badge-light">{{ user.username | titlecase }}</span>
+        Welcome <span class="badge badge-pill badge-light">{{ user.knownAs | titlecase }}</span>
       </a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
         <a class="dropdown-item" routerLink="/member/edit" routerLinkActive="active" >Edit Profile</a>

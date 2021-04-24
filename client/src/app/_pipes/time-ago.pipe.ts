@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Gender } from '../_enums/gender.enum';
 
 @Pipe({
   name: 'timeAgo',
@@ -20,7 +21,7 @@ export class TimeAgoPipe implements PipeTransform {
 		const years = Math.round(Math.abs(days/365));
     
     if (isNaN(seconds)) return '';
-    if (minutes < 1) return gender === 'f' ? `She's ${this.msg} her!` : `He's ${this.msg} him!`;
+    if (minutes < 1) return gender === Gender.Female ? `She's ${this.msg} her!` : `He's ${this.msg} him!`;
     if (minutes < 60) return `A few minutes ago`;
     if (hours === 1) return `An hour ago`;
     if (hours < 24) return `A few hours ago`;

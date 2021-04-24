@@ -17,6 +17,6 @@ export class LoadingInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (request.url.includes('user-exists')) return next.handle(request);
     this.busyService.busy();
-    return next.handle(request).pipe(finalize(() => this.busyService.idle()));
+    return next.handle(request).pipe(delay(1000), finalize(() => this.busyService.idle()));
   }
 }

@@ -1,5 +1,51 @@
+<div class="text-center mt-3">
+  <h3>{{ pagination$?.value?.totalItems }} users found</h3>
+</div>
+<div class="container mt-3" *ngIf="userParams$ | async as userParams">
+  <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMembers()" autocomplete="off" style="justify-content: center;">
+    <div class="form-group">
+      <label style="margin-right: 5px;">Age from: </label>
+      <input type="number" class="form-control btn-sm" style="width: 70px; padding-bottom: 0;" name="minAge" [(ngModel)]="userParams.minAge">
+    </div>
+    <div class="form-group px-2">
+      <label style="margin-right: 5px;">Age to: </label>
+      <input type="number" class="form-control btn-sm" style="width: 70px; padding-bottom: 0;" name="maxAge" [(ngModel)]="userParams.maxAge">
+    </div>
+    <div class="form-group px-2">
+      <label style="margin-right: 5px;">Show: </label>
+      <ng-select class="form-control btn-sm" style="padding-bottom: 0;" name="gender" [clearable]="false" [items]="genderList" [(ngModel)]="userParams.gender" bindValue="value"
+        bindLabel="title">
+        <ng-template ng-label-tmp let-item="item">
+          {{ item.title }}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          <div class="ng-select-custom-item">
+            {{ item.title }}
+          </div>
+        </ng-template>
+      </ng-select>
+    </div>
+
+    <button class="btn btn-sm btn-success ml-1" type="submit" style="color: black;">Apply Filters</button>
+    <button (click)="resetFilters()" class="btn btn-sm btn-secondary ml-1" type="button" style="color: black;">Reset Filters</button>
+    <div class="col">
+      <div class="btn-group float-right">
+        <button type="button" class="btn btn-primary" name="orderBy" btnRadio="lastActive" (click)="loadMembers()" [(ngModel)]="userParams.orderBy">Last
+          Active</button>
+        <button type="button" class="btn btn-primary" name="orderBy" btnRadio="created" (click)="loadMembers()"
+          [(ngModel)]="userParams.orderBy">Created</button>
+      </div>
+    </div>
+  </form>
+</div>
+
 <div class="row">
   <div class="col-2" *ngFor="let member of members$ | async; trackBy: trackById">
     <app-member-card [member]="member"></app-member-card>
   </div>
+</div>
+<div class="d-flex justify-content-center" *ngIf="pagination$ | async as pagination">
+  <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
+  </pagination>
 </div>

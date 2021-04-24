@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { Gender } from '../_enums/gender.enum';
 import { InvalidFeedback } from '../_models/invalid-feedback';
 import { Photo } from '../_models/photo';
 import { AccountService } from '../_services/account.service';
@@ -18,6 +18,8 @@ import { CustomValidators } from '../_validators/custom-validators';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   @Output() toggle: EventEmitter<void> = new EventEmitter();
+
+  readonly GenderEnum = Gender;
 
   readonly maxDate = new Date(new Date().setFullYear(new Date().getFullYear() - 18));
   registerForm: FormGroup;
@@ -126,7 +128,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       username: ['', [Validators.required], [CustomValidators.usernameExistsAsync(this.accountService)]],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
       confirmPassword: ['', [this.matchValues('password')]],
-      gender: ['f', Validators.required],
+      gender: [this.GenderEnum.Female, Validators.required],
       dateOfBirth: [this.maxDate, Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
