@@ -1,13 +1,22 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
+import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
   selector: 'app-member-card',
   templateUrl: './member-card.component.html',
   styleUrls: ['./member-card.component.sass'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MemberCardComponent {
   @Input() member: Member;
-  constructor() { }
+  constructor(private memberService: MembersService, private toastr: ToastrService) {}
+
+  async addLike(member: Member) {
+    await this.memberService
+      .addLike(member.username)
+      .toPromise()
+      .then(() => this.toastr.success(`You have liked ${member.knownAs}`));
+  }
 }

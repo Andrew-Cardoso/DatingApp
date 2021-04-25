@@ -26,6 +26,8 @@ export class ErrorInterceptor implements HttpInterceptor {
               const modalStateErrors = [];
               for (const key in errors) errors[key] && modalStateErrors.push(errors[key]);
               throw modalStateErrors.flat();
+            } else if (typeof e.error === 'object') {
+              this.toastr.error(e.statusText, `${e.status}`);
             } else {
               this.toastr.error(e.error, `${e.status}`);
             }
