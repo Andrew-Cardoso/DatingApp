@@ -1,15 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { MessageContainer } from '../_enums/message-container.enum';
+import { Message } from '../_models/message';
+import { Pagination } from '../_models/pagination';
+import { MessageService } from '../_services/message.service';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.sass']
+  styleUrls: ['./messages.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessagesComponent implements OnInit {
 
-  constructor() { }
+  readonly messages$ = new BehaviorSubject<Message[]>(null);
+  readonly loading$ = new BehaviorSubject(false);
+
+  readonly ContainerEnum = MessageContainer;
+
+  container = this.ContainerEnum.Unread;
+
+  pagination: Pagination;
+  pageNumber = 1;
+  pageSize = 5;
+
+
+  constructor(private messageService: MessageService) { }
 
   ngOnInit() {
+    this.loadMessages();
+  }
+
+  async loadMessages() {
+    this.loading$.next(true);
+    const { pagination, result } = await this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).toPromise();
+    this.pagination = pagination;
+    this.messages$.next(result);
+    setTimeout(() => this.loading$.next(false));
+  }
+
+  deleteMessage(id: number) {
+    const messages = this.messages$.value;
+    const index = messages.findIndex(x => x.id === id);
+
+    this.messageService.deleteMessage(id).toPromise().then(() => {
+      messages.splice(index, 1);
+      this.messages$.next(messages);
+    });
+  }
+
+  pageChanged(event: unknown) {
+    this.pageNumber = event['page'] ?? 1;
+    this.loadMessages();
   }
 
 }

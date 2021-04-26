@@ -1,15 +1,14 @@
-<div class="pow full-height no-overflow inset-grey" *ngIf="member$ | async as member">
+<div class="pow full-height no-overflow inset-grey">
   <div class="col-3 v-center" #cardParent>
     <app-member-profile-card [member]="member">
       <div class="btn-group d-flex" style="gap: 1rem;">
         <button class="btn btn-cozy">Like</button>
-        <button class="btn btn-good-blue">Message</button>
+        <button class="btn btn-good-blue" (click)="selectTab(3)">Message</button>
       </div>
     </app-member-profile-card>
   </div>
-  <!-- <div class="col-9 v-center" [sameHeightAs]="cardParent"> -->
   <div class="col-9 v-center animate-faster" [style.height.px]="cardParent.offsetHeight">
-    <tabset class="member-tabset">
+    <tabset class="member-tabset" [class.onMessages]="onMessages" #tabs>
       <tab heading='About {{ member.knownAs }}'>
         <app-about [lookingFor]="member.lookingFor" [introduction]="member.introduction"></app-about>
       </tab>
@@ -19,10 +18,9 @@
       <tab heading='Photos'>
         <app-photos [photos]="member.photos"></app-photos>
       </tab>
-      <tab heading='Messages'>
-        <app-messages-tab [messages]="'messages'"></app-messages-tab>
+      <tab heading='Messages' customClass="messages" (selectTab)="onMessages = true" (deselect)="onMessages = false">
+        <app-messages-tab [username]="member.username" *ngIf="onMessages"></app-messages-tab>
       </tab>
     </tabset>
-  <!-- </div> -->
   </div>
 </div>

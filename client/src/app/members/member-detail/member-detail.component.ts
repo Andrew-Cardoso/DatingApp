@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
@@ -8,14 +12,23 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-detail.component.sass'],
 })
 export class MemberDetailComponent implements OnInit {
-  member$ = this.memberService.getMember(
-    this.route.snapshot.paramMap.get('username')
-  );
+
+  @ViewChild('tabs', {static: true}) tabs: TabsetComponent;
+
+  member: Member;
+  onMessages = false;
 
   constructor(
     private memberService: MembersService,
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.data.pipe(take(1)).subscribe(({ member }) => this.member = member);
+    this.route.queryParams.pipe(take(1)).subscribe(({ tab }) => this.selectTab(tab ?? 0));
+  }
+
+  selectTab(tabId: number) {
+    this.tabs.tabs[tabId].active = true;
+  }
 }

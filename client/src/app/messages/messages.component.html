@@ -1,3 +1,61 @@
-<p>
-  messages works!
-</p>
+<div class="row mb-4">
+  <div class="col-10 offset-1">
+    <div class="btn-group" name="container">
+      <button class="btn btn-primary" [btnRadio]="ContainerEnum.Unread" [(ngModel)]="container" (click)="loadMessages()">
+        <i class="fa fa-envelope"></i>
+        Unread
+      </button>
+      <button class="btn btn-primary" [btnRadio]="ContainerEnum.Inbox" [(ngModel)]="container" (click)="loadMessages()">
+        <i class="fa fa-envelope-open"></i>
+        Inbox
+      </button>
+      <button class="btn btn-primary" [btnRadio]="ContainerEnum.Outbox" [(ngModel)]="container" (click)="loadMessages()">
+        <i class="fa fa-paper-plane"></i>
+        Outbox
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="messages$ | async as messages; else noMessages">
+  <div class="col-10 offset-1">
+    <table class="table table-dark table-hover" style="cursor: pointer;" *ngIf="messages.length > 0; else noMessages">
+      <tr>
+        <th style="width: 40%;">Message</th>
+        <th style="width: 20%;">From / To</th>
+        <th style="width: 20%;">Sent / Received</th>
+        <th style="width: 20%;"></th>
+      </tr>
+      <tr [hidden]="loading$ | async" *ngFor="let message of messages"
+        [routerLink]="container === ContainerEnum.Outbox ? '/members/' + message.receiverUsername : '/members/' + message.senderUsername" [queryParams]="{tab: 3}">
+        <td>{{message.content}}</td>
+        <td>
+          <div *ngIf="container === ContainerEnum.Outbox">
+            <img class="img-circle rounded-circle mr-2" [src]="message.receiverPhotoUrl" [alt]="message.receiverUsername">
+            <strong>{{ message.receiverUsername | titlecase }}</strong>
+          </div>
+          <div *ngIf="container !== ContainerEnum.Outbox">
+            <img class="img-circle rounded-circle mr-2" [src]="message.senderPhotoUrl" [alt]="message.senderUsername">
+            <strong>{{ message.senderUsername | titlecase }}</strong>
+          </div>
+        </td>
+        <td>
+          {{ message.messageSent | timeAgo: container === ContainerEnum.Outbox ? message.receiverGender : message.senderGender }}
+        </td>
+        <td>
+          <button class="btn btn-sm btn-danger" (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<ng-template #noMessages>
+  <h4 style="color: white;">No messages</h4>
+</ng-template>
+
+<div class="d-flex justify-content-center" *ngIf="pagination && (messages$ | async) && (messages$ | async).length > 0">
+  <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
+  </pagination>
+</div>

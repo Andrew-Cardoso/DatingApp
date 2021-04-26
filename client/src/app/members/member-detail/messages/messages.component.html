@@ -1,3 +1,25 @@
-<p>
-  messages works!
-</p>
+<article class="bg-primary text-white chat">
+  <section class="chat-body" #chatBody>
+    <div *ngFor="let message of messages$ | async" class="message-container" [class.receiver]="message?.senderUsername === username">
+      <small class="text-muted">
+        <span class="fa fa-clock-o">&ensp;&ensp;sent {{ message.messageSent | timeAgo | lowercase }}</span>
+        <span class="text-warning" *ngIf="!message.dateRead && message.senderUsername !== username">
+          (unread)
+        </span>
+        <span class="text-success" *ngIf="message.dateRead && message.senderUsername !== username">
+          (read {{message.dateRead | timeAgo | lowercase}})
+        </span>
+      </small>
+      <p>{{ message.content }}</p>
+      <img [src]="message.senderPhotoUrl" [alt]="message.senderUsername">
+    </div>
+  </section>
+  <section class="chat-footer">
+    <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+      <textarea class="form-control" name="messageContent" required [(ngModel)]="messageContent"></textarea>
+      <button class="btn" type="submit" [disabled]="!messageForm.valid">
+        <i class="fa fa-paper-plane"></i>
+      </button>
+    </form>
+  </section>
+</article>
