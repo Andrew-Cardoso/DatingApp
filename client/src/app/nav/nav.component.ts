@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs/operators';
+import { Roles } from '../_enums/roles.enum';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -9,6 +11,8 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./nav.component.sass']
 })
 export class NavComponent implements OnInit {
+
+  roles = [Roles.Captain, Roles['First Mate']];
   model: any = {};
 
   constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService) { }
@@ -16,7 +20,7 @@ export class NavComponent implements OnInit {
   ngOnInit() { }
 
   login() {
-    this.accountService.login(this.model).subscribe(() => this.router.navigateByUrl('/members'));
+    this.accountService.login(this.model).pipe(take(1)).subscribe(() => this.router.navigateByUrl('/members'));
   }
   logout() {
     this.accountService.logout();
@@ -24,16 +28,16 @@ export class NavComponent implements OnInit {
   }
 
   internalserver () {
-    this.accountService.getInternal().subscribe();
+    this.accountService.getInternal().pipe(take(1)).subscribe();
   }
   nf() {
-    this.accountService.getNF().subscribe();
+    this.accountService.getNF().pipe(take(1)).subscribe();
   }
   auth() {
-    this.accountService.getAuth().subscribe();
+    this.accountService.getAuth().pipe(take(1)).subscribe();
   }
   br() {
-    this.accountService.getBadR().subscribe();
+    this.accountService.getBadR().pipe(take(1)).subscribe();
   }
 
 }

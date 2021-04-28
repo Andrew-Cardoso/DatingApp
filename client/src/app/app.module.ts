@@ -24,7 +24,6 @@ import { TimeAgoPipe } from './_pipes/time-ago.pipe';
 import { SharedModule } from './_modules/shared/shared.module';
 import { AboutComponent } from './members/member-detail/about/about.component';
 import { InterestsComponent } from './members/member-detail/interests/interests.component';
-import { SameHeightDirective } from './_directives/same-height.directive';
 import { PhotosComponent } from './members/member-detail/photos/photos.component';
 import { MessagesTabComponent } from './members/member-detail/messages/messages.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
@@ -40,6 +39,12 @@ import { HasErrorPipe } from './_pipes/has-error.pipe';
 import { InputComponent } from './_forms/input/input.component';
 import { TextareaComponent } from './_forms/textarea/textarea.component';
 import { DateComponent } from './_forms/date/date.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { FormatRolesPipe } from './_pipes/format-roles.pipe';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +69,6 @@ import { DateComponent } from './_forms/date/date.component';
     TimeAgoPipe,
     IsEqualPipe,
     CitiesPipe,
-    SameHeightDirective,
     MemberProfileCardComponent,
     PhotoEditorComponent,
     IsInvalidPipe,
@@ -72,6 +76,12 @@ import { DateComponent } from './_forms/date/date.component';
     InputComponent,
     TextareaComponent,
     DateComponent,
+    AdminPanelComponent,
+    HasRoleDirective,
+    UserManagementComponent,
+    PhotoManagementComponent,
+    FormatRolesPipe,
+    RolesModalComponent
   ],
   imports: [
     CommonModule,

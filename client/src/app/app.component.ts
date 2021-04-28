@@ -8,8 +8,6 @@ import { AccountService } from './_services/account.service';
   styleUrls: ['./app.component.sass'],
 })
 export class AppComponent implements OnInit {
-  title = 'client';
-  users: any[];
 
   constructor(private accountService: AccountService) {}
 

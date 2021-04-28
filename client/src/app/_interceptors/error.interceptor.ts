@@ -33,21 +33,17 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
             break;
           case 401:
-            console.log(e);
-            this.toastr.error(e.error ?? 'Unauthorized', `${e.status}`);
+            this.toastr.error(e.error?.title ?? e.error ?? 'Unauthorized', `${e.status}`);
             break;
           case 404: 
-          console.log(e);
             this.router.navigateByUrl('/not-found');
             break;
           case 500:
-            console.log(e);
             const navExtras: NavigationExtras = {state: {error: e.error}};
             this.router.navigateByUrl('/server-error', navExtras);
             break;
           default:
             this.toastr.error('Something unexpected went wrong', '???');
-            console.log(e);
             break;
         }
       }

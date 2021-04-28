@@ -12,6 +12,9 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/messages">Messages</a>
       </li>
+      <li *hasRole="roles" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/admin">Captain</a>
+      </li>
     </ul>
     <div class="dropdown" dropdown>
       <img [src]="user.photoUrl" [alt]="user.knownAs">

@@ -11,6 +11,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { ModalModule } from 'ngx-bootstrap/modal';
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +26,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     BsDatepickerModule.forRoot(),
     TextareaAutosizeModule,
     PaginationModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -38,6 +40,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     TextareaAutosizeModule,
     PaginationModule,
     ButtonsModule,
+    ModalModule
   ],
   declarations: [],
 })

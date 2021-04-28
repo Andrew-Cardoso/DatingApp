@@ -1,0 +1,13 @@
+<div class="pow full-height no-overflow inset-grey text-center" style="display: block;">
+	<h1>Captain Panel</h1>
+	<div class="col-10 offset-1">
+		<tabset class="member-tabset admin-tabset">
+			<tab heading="Crew Management" *hasRole="captainRole">
+				<app-user-management></app-user-management>
+			</tab>
+			<tab heading="Photo Management">
+				<app-photo-management></app-photo-management>
+			</tab>
+		</tabset>
+	</div>
+</div>
