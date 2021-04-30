@@ -1,5 +1,5 @@
 const recursiveClone = <T>(value: T): T => {
-	if (!value || ['number', 'string'].includes(typeof value)) return value;
+	if (!value || ['number', 'string', 'boolean'].includes(typeof value)) return value;
 
 	if (Array.isArray(value)) return <T><unknown>value.map(x => recursiveClone(x));
 

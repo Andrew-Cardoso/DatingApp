@@ -34,7 +34,7 @@ namespace API.Data
 			// }).SingleOrDefaultAsync();
 
 			//Newer and faster way - The query gets only the columns needed.
-			return await _context.Users//.Where(x => x.UserName == username)
+			return await _context.Users
 			.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
 			.SingleOrDefaultAsync(x => x.Username == username.ToLower());
 		}
@@ -57,13 +57,6 @@ namespace API.Data
 			.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
 			.AsNoTracking();
 
-			/* Cool way to switch */
-			// query = userParams.OrderBy switch
-			// {
-			// 	"created" => query.OrderByDescending(user => user.Created),
-			// 	_ => query.OrderByDescending(user => user.LastActive)
-			// };
-
 			return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
 		}
 
@@ -81,12 +74,10 @@ namespace API.Data
 		{
 			return await _context.Users.Include(x => x.Photos).ToListAsync();
 		}
-
-		public async Task<bool> SaveAllAsync()
+		public async Task<string> GetUserGender(string username)
 		{
-			return await _context.SaveChangesAsync() > 0;
+			return await _context.Users.Where(x => x.UserName == username).Select(x => x.Gender).FirstOrDefaultAsync();
 		}
-
 		public void Update(AppUser user)
 		{
 			_context.Entry(user).State = EntityState.Modified;

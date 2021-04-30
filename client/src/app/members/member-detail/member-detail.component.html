@@ -2,7 +2,7 @@
   <div class="col-3 v-center" #cardParent>
     <app-member-profile-card [member]="member">
       <div class="btn-group d-flex" style="gap: 1rem;">
-        <button class="btn btn-cozy">Like</button>
+        <button class="btn btn-cozy" (click)="like()">Like</button>
         <button class="btn btn-good-blue" (click)="selectTab(3)">Message</button>
       </div>
     </app-member-profile-card>

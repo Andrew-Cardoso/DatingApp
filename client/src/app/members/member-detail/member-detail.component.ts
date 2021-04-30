@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
-import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
-import { PresenceService } from 'src/app/_services/presence.service';
 
 @Component({
 	selector: 'app-member-detail',
@@ -18,7 +17,7 @@ export class MemberDetailComponent implements OnInit {
 	member: Member;
 	onMessages = false;
 
-	constructor(private route: ActivatedRoute, router: Router) {
+	constructor(private route: ActivatedRoute, router: Router, private memberService: MembersService, private toastr: ToastrService) {
 		router.routeReuseStrategy.shouldReuseRoute = () => false;
 	}
 
@@ -29,5 +28,12 @@ export class MemberDetailComponent implements OnInit {
 
 	selectTab(tabId: number) {
 		this.tabs.tabs[tabId].active = true;
+	}
+
+	async like() {
+		await this.memberService
+			.addLike(this.member.username)
+			.toPromise()
+			.then(() => this.toastr.success(`You have liked ${this.member.knownAs}`));
 	}
 }

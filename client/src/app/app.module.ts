@@ -46,6 +46,7 @@ import { PhotoManagementComponent } from './admin/photo-management/photo-managem
 import { FormatRolesPipe } from './_pipes/format-roles.pipe';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { StringHasValuePipe } from './_pipes/string-has-value.pipe';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { StringHasValuePipe } from './_pipes/string-has-value.pipe';
     PhotoManagementComponent,
     FormatRolesPipe,
     RolesModalComponent,
-    StringHasValuePipe
+    StringHasValuePipe,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,

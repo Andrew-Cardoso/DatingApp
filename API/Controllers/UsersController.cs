@@ -15,24 +15,24 @@ namespace API.Controllers
 	[Authorize]
 	public class UsersController : BaseApiController
 	{
-		private readonly IUserRepository _userRepository;
 		private readonly IMapper _mapper;
-		public UsersController(IUserRepository userRepository, IMapper mapper)
+		private readonly IUnitOfWork _unitOfWork;
+		public UsersController(IMapper mapper, IUnitOfWork unitOfWork)
 		{
+			_unitOfWork = unitOfWork;
 			_mapper = mapper;
-			_userRepository = userRepository;
 		}
-		
+
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
+		public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
 		{
-			//return Ok(_mapper.Map<IEnumerable<MemberDto>>(await _userRepository.GetUsersAsync()));
-			AppUser user = await _userRepository.GetUserAsync(User.GetUsername());
-			userParams.CurrentUsername = user.UserName;
+			
+			userParams.CurrentUsername = User.GetUsername();
+			var gender = await _unitOfWork.UserRepository.GetUserGender(userParams.CurrentUsername);
 
-			if (string.IsNullOrEmpty(userParams.Gender)) userParams.Gender = user.Gender == "m" ? "f" : "m";
+			if (string.IsNullOrEmpty(userParams.Gender)) userParams.Gender = gender == "m" ? "f" : "m";
 
-			var users = await _userRepository.GetMembersAsync(userParams);
+			var users = await _unitOfWork.UserRepository.GetMembersAsync(userParams);
 			Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
 			return Ok(users);
@@ -41,34 +41,23 @@ namespace API.Controllers
 		[HttpGet("{username}")]
 		public async Task<ActionResult<MemberDto>> GetUser(string username)
 		{
-			return await _userRepository.GetMemberAsync(username);
+			return await _unitOfWork.UserRepository.GetMemberAsync(username);
 		}
 
 		[HttpPut]
 		public async Task<ActionResult<MemberDto>> UpdateUser(MemberUpdateDto memberUpdated)
 		{
 			var username = User.GetUsername();
-			var user = await _userRepository.GetUserAsync(username);
+			var user = await _unitOfWork.UserRepository.GetUserAsync(username);
 
 			_mapper.Map(memberUpdated, user);
-			_userRepository.Update(user);
-			
+			_unitOfWork.UserRepository.Update(user);
+
 			if (!user.Photos.Any(x => x.IsMain)) user.Photos.FirstOrDefault().IsMain = true;
 
-			if (await _userRepository.SaveAllAsync()) return Ok(_mapper.Map<MemberDto>(user));
+			if (await _unitOfWork.Complete()) return Ok(_mapper.Map<MemberDto>(user));
 			return BadRequest($"Failed to update {username}");
 		}
-
-		// [HttpPatch]
-		// public async Task<ActionResult> UpdatePhotos(IEnumerable<PhotoDto> photos)
-		// {
-		// 	var currentUser = await _userRepository.GetUserAsync(User.GetUsername());
-		// 	_mapper.Map<IEnumerable<PhotoDto>, IEnumerable<Photo>>(photos, currentUser.Photos);
-		// 	_userRepository.Update(currentUser);
-			
-		// 	if (await _userRepository.SaveAllAsync()) return NoContent();
-		// 	return BadRequest("Something wrong happened");
-		// }
 
 	}
 }

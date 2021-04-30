@@ -30,7 +30,8 @@ namespace API.Helpers
 			.ForMember(dest => dest.SenderGender, opt => opt.MapFrom(src => src.Sender.Gender))
 			.ForMember(dest => dest.ReceiverGender, opt => opt.MapFrom(src => src.Receiver.Gender));
 
-			CreateMap<DateTime, DateTime>().ConvertUsing(dest => DateTime.SpecifyKind(dest, DateTimeKind.Utc));
+			// Using a almost database level convertion in Data/DataContext
+			// CreateMap<DateTime, DateTime>().ConvertUsing(dest => DateTime.SpecifyKind(dest, DateTimeKind.Utc));
 		}
 	}
 }

@@ -1,0 +1,10 @@
+<div class="modal-header bg-primary">
+  <h5 class="modal-title pull-left">{{title}}</h5>
+</div>
+<div class="modal-body bg-secondary">
+  <p>{{message}}</p>
+</div>
+<div class="modal-footer bg-primary">
+  <button type="button" class="btn btn-danger" (click)="complete()">{{btnCancelText}}</button>
+  <button type="button" class="btn btn-success" (click)="complete(true)">{{btnOkText}}</button>
+</div>

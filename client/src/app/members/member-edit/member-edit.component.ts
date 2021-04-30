@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
+import { clone } from 'src/app/_helpers/clone';
 import { Member } from 'src/app/_models/member';
 import { User } from 'src/app/_models/user';
 import { IsEqualPipe } from 'src/app/_pipes/is-equal.pipe';
@@ -41,7 +42,7 @@ export class MemberEditComponent implements OnInit {
 
   async loadMember() {
     this.member = await this.memberService.getMember(this.user.username).toPromise();
-    this.originalMember = JSON.parse(JSON.stringify(this.member));
+    this.originalMember = clone(this.member);
   }
 
   updateMemberUrl(photoUrl: string) {
