@@ -1,4 +1,5 @@
 <div class="card mb-4 text-white bg-primary">
+  
   <div class="card-img-wrapper">
     <img class="card-img-top" src="{{ member.photoUrl }}" alt="Main photo {{ member.knownAs }}">
     <ul class="list-inline member-icons animate text-center">
@@ -19,10 +20,14 @@
       </li>
     </ul>
   </div>
-  <div class="card-body p-1 pt-2 bg-primary-darker">
+  <div class="card-body p-1 pt-2 bg-primary-darker">    
     <h6 class="card-title text-center mb-1">
-      <i class="fa fa-user mr-2"></i>
-      {{ member.knownAs }}, {{ member.age }}
+      <!-- <span *ngIf="(presence.onlineUsers$ | async).includes(member.username)" class="badge badge-success status-online">Online</span> -->
+        <i *ngIf="(presence.onlineUsers$ | async).includes(member.username); else offlineIcon" tooltip="Online" class="fa fa-user mr-2 user-online"></i>
+        {{ member.knownAs }}, {{ member.age }}
+        <ng-template #offlineIcon>
+          <i class="fa fa-user mr-2" tooltip="Offline, sorry"></i>
+        </ng-template>
     </h6>
     <p class="card-text text-muted text-center">{{ member.city }}</p>
   </div>

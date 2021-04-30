@@ -15,9 +15,9 @@
     </div>
   </section>
   <section class="chat-footer">
-    <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
-      <textarea class="form-control" name="messageContent" required [(ngModel)]="messageContent"></textarea>
-      <button class="btn" type="submit" [disabled]="!messageForm.valid">
+    <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off" >
+      <textarea class="form-control" name="messageContent" required [(ngModel)]="messageContent"  (keydown.enter)="sendMessage()"></textarea>
+      <button class="btn" type="submit" [disabled]="!(messageContent | stringHasValue)">
         <i class="fa fa-paper-plane"></i>
       </button>
     </form>

@@ -45,6 +45,7 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { FormatRolesPipe } from './_pipes/format-roles.pipe';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { StringHasValuePipe } from './_pipes/string-has-value.pipe';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     UserManagementComponent,
     PhotoManagementComponent,
     FormatRolesPipe,
-    RolesModalComponent
+    RolesModalComponent,
+    StringHasValuePipe
   ],
   imports: [
     CommonModule,

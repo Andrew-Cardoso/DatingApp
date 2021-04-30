@@ -1,5 +1,8 @@
 <div class="card text-white bg-primary">
-  <h3 class="card-header text-center">{{ member.knownAs }}</h3>
+  <h3 class="card-header text-center">
+    {{ member.knownAs }}
+    <span *ngIf="(presence.onlineUsers$ | async).includes(member.username)" class="badge badge-pill badge-success user-online">Online</span>
+  </h3>
   <img src="{{ member.photoUrl }}" alt="{{ member.knownAs }}" class="card-img-top img-thumbnail">
   <div class="card-body">
     <div>

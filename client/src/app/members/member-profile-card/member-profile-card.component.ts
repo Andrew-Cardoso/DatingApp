@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { PresenceService } from 'src/app/_services/presence.service';
 import { Member } from '../../_models/member';
 
 @Component({
@@ -15,7 +16,7 @@ export class MemberProfileCardComponent implements OnInit {
   private day: number;
   private hour: number;
 
-  constructor(private changeDect: ChangeDetectorRef) { }
+  constructor(private changeDect: ChangeDetectorRef, public presence: PresenceService) { }
 
   ngOnInit() {
       const lastActive = new Date(this.member.lastActive);
