@@ -67,7 +67,20 @@ namespace API.Data
 
 		public async Task<AppUser> GetUserAsync(string username)
 		{
-			return await _context.Users.Include(x => x.Photos).SingleOrDefaultAsync(x => x.UserName == username.ToLower());
+			return await _context.Users
+			.Include(x => x.Photos)
+			.SingleOrDefaultAsync(x => x.UserName == username.ToLower());
+		}
+		public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)
+		{
+			var query = _context.Users
+			.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+			.Where(x => x.Username == username.ToLower())
+			.AsQueryable();
+
+			if (isCurrentUser) query = query.IgnoreQueryFilters();
+
+			return await query.FirstOrDefaultAsync();
 		}
 
 		public async Task<IEnumerable<AppUser>> GetUsersAsync()

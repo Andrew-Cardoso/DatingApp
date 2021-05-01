@@ -49,8 +49,7 @@ namespace API.Data
                             Username = user.UserName,
                             KnownAs = user.KnownAs,
                             Age = user.DateOfBirth.CalculateAge(),
-                            PhotoUrl =
-                                user.Photos.FirstOrDefault(x => x.IsMain).Url,
+                            PhotoUrl = PhotosHelper.GetMainPhoto(user.Photos),
                             City = user.City,
                             Id = user.Id
                         });

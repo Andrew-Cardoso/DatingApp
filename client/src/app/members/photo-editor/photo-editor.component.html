@@ -4,9 +4,9 @@
 		<img src="../../../assets/images/upload-photo.png" alt="Upload image">
 	</div>
 	<div class="col-2 text-center" *ngFor="let photo of photos">
-		<img class="img-thumbnail p-1" src="{{ photo.url }}" alt="{{ photo.id + (photo.isMain ? ' main' : '') }}">
+		<img class="img-thumbnail p-1" src="{{ photo.url }}" alt="{{ photo.id + (photo.isMain ? ' main' : '') }}" [class.awaiting-approval]="!photo.isApproved" [tooltip]="!photo.isApproved ? 'Awaiting Approval' : ''">
 		<div class="action">
-			<button (click)="setMain(photo)" class="btn btn-sm" tooltip="Set as main" [ngClass]="photo.isMain ? 'btn-outline-primary' : 'btn-primary'" [disabled]="photo.isMain">Main</button>
+			<button (click)="setMain(photo)" class="btn btn-sm" tooltip="Set as main" [ngClass]="photo.isMain ? 'btn-outline-primary' : 'btn-primary'">Main</button>
 			<button (click)="deletePhoto(photo)" class="btn btn-sm btn-danger" tooltip="Delete photo" [class.disabled]="photos.length === 1"><i class="fa fa-trash"></i></button>
 		</div>
 	</div>

@@ -1,1 +1,24 @@
-<p>photo-management works!</p>
+<div class="row">
+	<div class="col-12" *ngFor="let user of users$ | async">
+		<article>
+			<img [src]="user.photoUrl" [alt]="user.knownAs">
+			<h5>{{user.knownAs}}</h5>
+		</article>
+		<article>
+			<section *ngFor="let pendingPhoto of user.photos; let i = index">
+				<img [src]="pendingPhoto.url" alt="photo-{{i}}">
+				<button class="btn btn-sm btn-danger btn-deny" (click)="deny(pendingPhoto, user)">
+					<img src="assets/images/alert-32.png" alt="Deny" tooltip="Deny Photo">
+				</button>
+				<button class="btn btn-sm btn-success btn-accept" (click)="accept(pendingPhoto, user)">
+					<img src="assets/images/approval-32.png" alt="Approve" tooltip="Approve Photo">
+				</button>
+			</section>
+		</article>
+	</div>
+</div>
+<div class="d-flex justify-content-center" *ngIf="pagination">
+	<pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage"
+		previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
+	</pagination>
+</div>

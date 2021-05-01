@@ -26,7 +26,14 @@ export class PhotoEditorComponent implements OnInit {
   setMain(photo: Photo) {
     this.photos.find(x => x.isMain).isMain = false;
     photo.isMain = true;
-    this.setMainUrl.emit(photo.url);
+
+    if (photo.isApproved) {
+      this.setMainUrl.emit(photo.url);
+      return;
+    }
+
+    this.toastr.info('This photo will be set as main once it is approved', 'Requires approval');
+    this.setMainUrl.emit('assets/photos/default.png');
   }
   deletePhoto(photo: Photo) {    
     if (this.photos.length === 1) return this.toastr.warning('You must have at least one photo');

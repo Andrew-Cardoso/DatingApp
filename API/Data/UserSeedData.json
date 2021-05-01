@@ -10,7 +10,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/luffy.png"
+				"Url": "assets/photos/luffy.png",
+				"IsApproved": true
 			}
 		]
 	},
@@ -25,7 +26,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/zoro.jpg"
+				"Url": "assets/photos/zoro.jpg",
+				"IsApproved": true
 			}
 		]
 	},
@@ -40,7 +42,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/nami.jpg"
+				"Url": "assets/photos/nami.jpg",
+				"IsApproved": true
 			}
 		]
 	},
@@ -55,7 +58,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/usopp.png"
+				"Url": "assets/photos/usopp.png",
+				"IsApproved": true
 			}
 		]
 	},
@@ -70,7 +74,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/sanji.jpg"
+				"Url": "assets/photos/sanji.jpg",
+				"IsApproved": true
 			}
 		]
 	},
@@ -85,7 +90,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/chopper.jpg"
+				"Url": "assets/photos/chopper.jpg",
+				"IsApproved": true
 			}
 		]
 	},
@@ -100,7 +106,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/robin.png"
+				"Url": "assets/photos/robin.png",
+				"IsApproved": true
 			}
 		]
 	},
@@ -115,7 +122,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/franky.png"
+				"Url": "assets/photos/franky.png",
+				"IsApproved": true
 			}
 		]
 	},
@@ -130,7 +138,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/brook.png"
+				"Url": "assets/photos/brook.png",
+				"IsApproved": true
 			}
 		]
 	},
@@ -145,7 +154,8 @@
 		"Photos": [
 			{
 				"IsMain": true,
-				"Url": "assets/photos/jinbe.png"
+				"Url": "assets/photos/jinbe.png",
+				"IsApproved": true
 			}
 		]
 	}
